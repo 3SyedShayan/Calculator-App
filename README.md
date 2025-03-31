@@ -1,1 +1,2 @@
-# Calculator-App
+# Calculator App
+Simple Calculator App, to make your daily Calculations! Nothing More...
