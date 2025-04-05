@@ -36,7 +36,7 @@ class Homepage extends StatelessWidget {
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
               mainAxisSpacing: 10,
               crossAxisSpacing: 10,
-              childAspectRatio: 1.5,
+              childAspectRatio: 1.4,
 
               crossAxisCount: 4,
             ),
@@ -45,12 +45,18 @@ class Homepage extends StatelessWidget {
               if (index % 4 == 0) {
                 return Container(
                   color: allOperations[index].color,
-                  child: InkWell(child: Text(allOperations[index].name), onTap: () {},),
+                  child: InkWell(
+                    child: Text(allOperations[index].name),
+                    onTap: () {},
+                  ),
                 );
               } else {
                 return Container(
                   color: allNumbers[index].color,
-                  child: InkWell(child: Text(allNumbers[index].name), onTap: () {},),
+                  child: InkWell(
+                    child: Text(allNumbers[index].name),
+                    onTap: () {},
+                  ),
                 );
               }
             },
