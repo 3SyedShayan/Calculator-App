@@ -12,7 +12,3 @@ var allNumbers = {
   Numbers(name: '9', value: 9),
   Numbers(name: '0', value: 0),
 }.toList();
-
-// String getTotal 
-
-//controller
