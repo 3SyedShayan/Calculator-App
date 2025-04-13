@@ -10,46 +10,46 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  int num1 = 0;
+  String num1 = '';
 
-  int num2 = 0;
+  String num2 = '';
 
   bool isOperationSelected = false;
 
-  int answer = 0;
+  double answer = 0;
   String operation = '//';
 
-  int calculations() {
+  void calculations() {
     print("Num 1 is $num1");
     print("Num 2 is $num2");
     print("Operation is $operation");
-
-    switch (operation) {
-      case '+':
-        answer = num1 + num2;
-        break;
-      case '-':
-        answer = num1 - num2;
-        break;
-      case '*':
-        answer = num1 * num2;
-        break;
-      case '/':
-        answer = num1 ~/ num2;
-        break;
-      case '//':
-        print("Something went Wrong");
-        answer = 0;
-        break;
-      default:
-        print("Invalid Operation: Error");
-        answer = 0;
-    }
     setState(() {
-      print("Answer is $answer");
-      this.answer = answer;
+      switch (operation) {
+        case '+':
+          answer = (double.parse(num1) + double.parse(num2));
+          break;
+        case '-':
+          answer = (double.parse(num1) - double.parse(num2));
+          break;
+        case '*':
+          answer = (double.parse(num1) * double.parse(num2));
+          break;
+        case '/':
+          if (num2 == '' || num2 == '0') {
+            print("Cannot Divide by Zero");
+          } else {
+            answer = (double.parse(num1) / double.parse(num2));
+            break;
+          }
+        case '//':
+          print("Something went Wrong");
+          answer = 0;
+          break;
+        default:
+          print("Invalid Operation: Error");
+          answer = 0;
+      }
     });
-    return answer;
   }
 
   @override
@@ -91,12 +91,12 @@ class _HomepageState extends State<Homepage> {
                           print(
                             "Num reassigning, isOperationSelected is $isOperationSelected",
                           );
-                          num1 = allNumbers[index].value;
+                          num1 += allNumbers[index].name;
                         } else {
                           print(
                             "Num reassigning, isOperationSelected is $isOperationSelected",
                           );
-                          num2 = allNumbers[index].value;
+                          num2 += allNumbers[index].name;
                         }
                       },
                     ),
@@ -110,8 +110,8 @@ class _HomepageState extends State<Homepage> {
                         if (allOperations[(index - 10)].name == '=') {
                           calculations();
                         } else if (allOperations[(index - 10)].name == 'AC') {
-                          num1 = 0;
-                          num2 = 0;
+                          num1 = '';
+                          num2 = '';
                           isOperationSelected = false;
                           setState(() {
                             answer = 0;
