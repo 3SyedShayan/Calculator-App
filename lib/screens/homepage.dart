@@ -17,38 +17,44 @@ class _HomepageState extends State<Homepage> {
   bool isOperationSelected = false;
 
   double answer = 0;
-  String operation = '//';
+  String operation = '';
 
   void calculations() {
     print("Num 1 is $num1");
     print("Num 2 is $num2");
     print("Operation is $operation");
+
+    switch (operation) {
+      case '+':
+        answer = (double.parse(num1) + double.parse(num2));
+        break;
+      case '-':
+        answer = (double.parse(num1) - double.parse(num2));
+        break;
+      case '*':
+        answer = (double.parse(num1) * double.parse(num2));
+        break;
+      case '/':
+        if (num2 == '' || num2 == '0') {
+          print("Cannot Divide by Zero");
+        } else {
+          answer = (double.parse(num1) / double.parse(num2));
+          break;
+        }
+      case '':
+        print("Something went Wrong");
+        answer = 0;
+        break;
+      default:
+        print("Invalid Operation: Error");
+        answer = 0;
+    }
+
     setState(() {
-      switch (operation) {
-        case '+':
-          answer = (double.parse(num1) + double.parse(num2));
-          break;
-        case '-':
-          answer = (double.parse(num1) - double.parse(num2));
-          break;
-        case '*':
-          answer = (double.parse(num1) * double.parse(num2));
-          break;
-        case '/':
-          if (num2 == '' || num2 == '0') {
-            print("Cannot Divide by Zero");
-          } else {
-            answer = (double.parse(num1) / double.parse(num2));
-            break;
-          }
-        case '//':
-          print("Something went Wrong");
-          answer = 0;
-          break;
-        default:
-          print("Invalid Operation: Error");
-          answer = 0;
-      }
+      this.answer = answer;
+      this.num1 = num1;
+      this.num2 = num2;
+      this.operation = operation;
     });
   }
 
@@ -68,7 +74,11 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
           ),
-          Text("Answer is $answer", style: const TextStyle(fontSize: 30)),
+          Text(
+            "$num1 $operation $num2 ${answer == 0 ? "" : " = $answer"}",
+            style: const TextStyle(fontSize: 25),
+          ),
+
           Expanded(
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -91,12 +101,16 @@ class _HomepageState extends State<Homepage> {
                           print(
                             "Num reassigning, isOperationSelected is $isOperationSelected",
                           );
-                          num1 += allNumbers[index].name;
+                          setState(() {
+                            num1 += allNumbers[index].name;
+                          });
                         } else {
                           print(
                             "Num reassigning, isOperationSelected is $isOperationSelected",
                           );
-                          num2 += allNumbers[index].name;
+                          setState(() {
+                            num2 += allNumbers[index].name;
+                          });
                         }
                       },
                     ),
@@ -105,6 +119,7 @@ class _HomepageState extends State<Homepage> {
                   return Container(
                     color: allOperations[(index - 10)].color,
                     child: InkWell(
+                      splashColor: Colors.red,
                       child: Text(allOperations[(index - 10)].name),
                       onTap: () {
                         if (allOperations[(index - 10)].name == '=') {
@@ -113,6 +128,7 @@ class _HomepageState extends State<Homepage> {
                           num1 = '';
                           num2 = '';
                           isOperationSelected = false;
+                          operation = '';
                           setState(() {
                             answer = 0;
                           });
@@ -122,7 +138,9 @@ class _HomepageState extends State<Homepage> {
                           print("Num 2 is $num2");
                           print("Operation is $isOperationSelected");
                         } else {
-                          operation = allOperations[(index - 10)].name;
+                          setState(() {
+                            operation = allOperations[(index - 10)].name;
+                          });
                           isOperationSelected = true;
                         }
                       },
