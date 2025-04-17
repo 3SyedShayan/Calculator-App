@@ -75,7 +75,7 @@ class _HomepageState extends State<Homepage> {
             ),
           ),
           Text(
-            "$num1 $operation $num2 ${answer == 0 ? "" : " = $answer"}",
+            "$num1 $operation $num2 ${answer == 0 ? "" : " = ${answer.toStringAsFixed(5)}"}",
             style: const TextStyle(fontSize: 25),
           ),
 
@@ -88,13 +88,14 @@ class _HomepageState extends State<Homepage> {
                 mainAxisExtent: 100,
                 crossAxisCount: 4,
               ),
-              itemCount: 16,
+              itemCount: 18,
               itemBuilder: (context, index) {
                 if (index < 10) {
                   return Container(
                     color: allNumbers[index].color,
                     child: InkWell(
-                      child: Text(allNumbers[index].name),
+                      splashColor: Colors.purple,
+                      child: Center(child: Text(allNumbers[index].name)),
                       onTap: () {
                         print("Entered num variables reassigning stage");
                         if (isOperationSelected == false) {
@@ -120,7 +121,9 @@ class _HomepageState extends State<Homepage> {
                     color: allOperations[(index - 10)].color,
                     child: InkWell(
                       splashColor: Colors.red,
-                      child: Text(allOperations[(index - 10)].name),
+                      child: Center(
+                        child: Text(allOperations[(index - 10)].name),
+                      ),
                       onTap: () {
                         if (allOperations[(index - 10)].name == '=') {
                           calculations();
@@ -137,6 +140,19 @@ class _HomepageState extends State<Homepage> {
                           print("Num 1 is $num1");
                           print("Num 2 is $num2");
                           print("Operation is $isOperationSelected");
+                        } 
+                        
+                        else if (allOperations[(index - 10)].name == '<-') {
+                          if (isOperationSelected == false) {
+                            num1 = num1.substring(0, num1.length - 1);
+                          } else {
+                            num2 = num2.substring(0, num2.length - 1);
+                          }
+
+                          setState(() {
+                            num1 = num1;
+                            num2 = num2;
+                          });
                         } else {
                           setState(() {
                             operation = allOperations[(index - 10)].name;
