@@ -58,6 +58,14 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
+  String _formatedAnswer(double answer) {
+    if (answer % 1 == 0) {
+      return answer.toInt().toString();
+    } else {
+      return answer.toStringAsFixed(2);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +83,7 @@ class _HomepageState extends State<Homepage> {
             ),
           ),
           Text(
-            "$num1 $operation $num2 ${answer == 0 ? "" : " = ${answer.toStringAsFixed(5)}"}",
+            "$num1 $operation $num2  ${answer == 0 ? "" : " = ${_formatedAnswer(answer)}"}",
             style: const TextStyle(fontSize: 25),
           ),
 
