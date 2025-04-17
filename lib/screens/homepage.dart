@@ -140,9 +140,17 @@ class _HomepageState extends State<Homepage> {
                           print("Num 1 is $num1");
                           print("Num 2 is $num2");
                           print("Operation is $isOperationSelected");
-                        } 
-                        
-                        else if (allOperations[(index - 10)].name == '<-') {
+                        } else if (allOperations[(index - 10)].name == '.') {
+                          if (isOperationSelected == false) {
+                            num1 += '.';
+                          } else {
+                            num2 += '.';
+                          }
+                          setState(() {
+                            num1 = num1;
+                            num2 = num2;
+                          });
+                        } else if (allOperations[(index - 10)].name == '<-') {
                           if (isOperationSelected == false) {
                             num1 = num1.substring(0, num1.length - 1);
                           } else {
