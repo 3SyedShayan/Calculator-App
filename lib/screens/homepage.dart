@@ -135,7 +135,7 @@ class _HomepageState extends State<Homepage> {
                       onTap: () {
                         if (allOperations[(index - 10)].name == '=') {
                           calculations();
-                        } else if (allOperations[(index - 10)].name == 'AC') {
+                        } else if (allOperations[(index - 10)].name == "AC") {
                           num1 = '';
                           num2 = '';
                           isOperationSelected = false;
@@ -148,6 +148,13 @@ class _HomepageState extends State<Homepage> {
                           print("Num 1 is $num1");
                           print("Num 2 is $num2");
                           print("Operation is $isOperationSelected");
+                        } else if (allOperations[(index - 10)].name == '-') {
+                          if (isOperationSelected == false) {
+                            num1 = '-' + num1;
+                          }
+                          setState(() {
+                            num1 = num1;
+                          });
                         } else if (allOperations[(index - 10)].name == '.') {
                           if (isOperationSelected == false) {
                             num1 += '.';
