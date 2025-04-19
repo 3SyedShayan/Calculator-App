@@ -19,6 +19,14 @@ class _HomepageState extends State<Homepage> {
   double answer = 0;
   String operation = '';
 
+  void _errorText(String error) {
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
+  }
+
+  //  void _history() {
+  //   List<String> history;
+  //   if(history.)
+  //  }
   void calculations() {
     print("Num 1 is $num1");
     print("Num 2 is $num2");
@@ -36,20 +44,21 @@ class _HomepageState extends State<Homepage> {
         break;
       case '/':
         if (num2 == '' || num2 == '0') {
-          print("Cannot Divide by Zero");
+          _errorText("Cannot Divide by Zero");
         } else {
           answer = (double.parse(num1) / double.parse(num2));
           break;
         }
       case '':
-        print("Something went Wrong");
+        _errorText("               Something went wrong");
         answer = 0;
         break;
       default:
-        print("Invalid Operation: Error");
+        _errorText("Invalid Operation");
         answer = 0;
     }
 
+    // _history();
     setState(() {
       this.answer = answer;
       this.num1 = num1;
@@ -96,7 +105,7 @@ class _HomepageState extends State<Homepage> {
                 mainAxisExtent: 100,
                 crossAxisCount: 4,
               ),
-              itemCount: 18,
+              itemCount: 19,
               itemBuilder: (context, index) {
                 if (index < 10) {
                   return Container(
@@ -148,12 +157,25 @@ class _HomepageState extends State<Homepage> {
                           print("Num 1 is $num1");
                           print("Num 2 is $num2");
                           print("Operation is $isOperationSelected");
-                        } else if (allOperations[(index - 10)].name == '-') {
-                          if (isOperationSelected == false) {
-                            num1 = '-' + num1;
+                        } else if (allOperations[(index - 10)].name == '+/-') {
+                          if (!isOperationSelected && num1.isNotEmpty) {
+                            if (num1.startsWith("-")) {
+                              num1 = num1.substring(1);
+                            } else {
+                              num1 = "-$num1";
+                            }
+                            setState(() {
+                              num1;
+                              num2;
+                            });
+                          } else if (num2.startsWith("-")) {
+                            num2 = num2.substring(1);
+                          } else {
+                            num2 = "-$num2";
                           }
                           setState(() {
-                            num1 = num1;
+                            num1;
+                            num2;
                           });
                         } else if (allOperations[(index - 10)].name == '.') {
                           if (isOperationSelected == false) {
