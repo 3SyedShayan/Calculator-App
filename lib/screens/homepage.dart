@@ -98,9 +98,8 @@ class _HomepageState extends State<Homepage> {
               ),
               itemCount: 19,
               itemBuilder: (context, index) {
-                String allNum = allNumbers[index].name;
-                String allOp = allOperations[(index - 10)].name;
                 if (index < 10) {
+                  String allNum = allNumbers[index].name;
                   return Container(
                     color: allNumbers[index].color,
                     child: InkWell(
@@ -120,6 +119,7 @@ class _HomepageState extends State<Homepage> {
                     ),
                   );
                 } else {
+                  String allOp = allOperations[(index - 10)].name;
                   return Container(
                     color: allOperations[(index - 10)].color,
                     child: InkWell(
