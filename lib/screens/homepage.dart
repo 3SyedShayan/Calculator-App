@@ -23,15 +23,7 @@ class _HomepageState extends State<Homepage> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
   }
 
-  //  void _history() {
-  //   List<String> history;
-  //   if(history.)
-  //  }
   void calculations() {
-    print("Num 1 is $num1");
-    print("Num 2 is $num2");
-    print("Operation is $operation");
-
     switch (operation) {
       case '+':
         answer = (double.parse(num1) + double.parse(num2));
@@ -58,7 +50,6 @@ class _HomepageState extends State<Homepage> {
         answer = 0;
     }
 
-    // _history();
     setState(() {
       this.answer = answer;
       this.num1 = num1;
@@ -107,27 +98,22 @@ class _HomepageState extends State<Homepage> {
               ),
               itemCount: 19,
               itemBuilder: (context, index) {
+                String allNum = allNumbers[index].name;
+                String allOp = allOperations[(index - 10)].name;
                 if (index < 10) {
                   return Container(
                     color: allNumbers[index].color,
                     child: InkWell(
                       splashColor: Colors.purple,
-                      child: Center(child: Text(allNumbers[index].name)),
+                      child: Center(child: Text(allNum)),
                       onTap: () {
-                        print("Entered num variables reassigning stage");
                         if (isOperationSelected == false) {
-                          print(
-                            "Num reassigning, isOperationSelected is $isOperationSelected",
-                          );
                           setState(() {
-                            num1 += allNumbers[index].name;
+                            num1 += allNum;
                           });
                         } else {
-                          print(
-                            "Num reassigning, isOperationSelected is $isOperationSelected",
-                          );
                           setState(() {
-                            num2 += allNumbers[index].name;
+                            num2 += allNum;
                           });
                         }
                       },
@@ -138,13 +124,11 @@ class _HomepageState extends State<Homepage> {
                     color: allOperations[(index - 10)].color,
                     child: InkWell(
                       splashColor: Colors.red,
-                      child: Center(
-                        child: Text(allOperations[(index - 10)].name),
-                      ),
+                      child: Center(child: Text(allOp)),
                       onTap: () {
-                        if (allOperations[(index - 10)].name == '=') {
+                        if (allOp == '=') {
                           calculations();
-                        } else if (allOperations[(index - 10)].name == "AC") {
+                        } else if (allOp == "AC") {
                           num1 = '';
                           num2 = '';
                           isOperationSelected = false;
@@ -152,12 +136,7 @@ class _HomepageState extends State<Homepage> {
                           setState(() {
                             answer = 0;
                           });
-
-                          print("AC pressed");
-                          print("Num 1 is $num1");
-                          print("Num 2 is $num2");
-                          print("Operation is $isOperationSelected");
-                        } else if (allOperations[(index - 10)].name == '+/-') {
+                        } else if (allOp == '+/-') {
                           if (!isOperationSelected && num1.isNotEmpty) {
                             if (num1.startsWith("-")) {
                               num1 = num1.substring(1);
@@ -177,7 +156,7 @@ class _HomepageState extends State<Homepage> {
                             num1;
                             num2;
                           });
-                        } else if (allOperations[(index - 10)].name == '.') {
+                        } else if (allOp == '.') {
                           if (isOperationSelected == false) {
                             num1 += '.';
                           } else {
@@ -187,7 +166,7 @@ class _HomepageState extends State<Homepage> {
                             num1 = num1;
                             num2 = num2;
                           });
-                        } else if (allOperations[(index - 10)].name == '<-') {
+                        } else if (allOp == '<-') {
                           if (isOperationSelected == false) {
                             num1 = num1.substring(0, num1.length - 1);
                           } else {
@@ -200,7 +179,7 @@ class _HomepageState extends State<Homepage> {
                           });
                         } else {
                           setState(() {
-                            operation = allOperations[(index - 10)].name;
+                            operation = allOp;
                           });
                           isOperationSelected = true;
                         }
