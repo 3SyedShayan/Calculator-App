@@ -23,6 +23,24 @@ class _HomepageState extends State<Homepage> {
     ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(error)));
   }
 
+  List<String> history = [];
+  void _history() {
+    if (history.length >= 5) {
+      history.insert(0, "$num1 $operation $num2 = ${_formatedAnswer(answer)}");
+      history.removeAt(5);
+      setState(() {
+        history;
+      });
+      print("With Parameter ${history[0]}");
+    } else {
+      history.insert(0, "$num1 $operation $num2 = ${_formatedAnswer(answer)}");
+      setState(() {
+        history;
+      });
+      print("No Parameter ${history[0]}");
+    }
+  }
+
   void calculations() {
     switch (operation) {
       case '+':
@@ -56,6 +74,7 @@ class _HomepageState extends State<Homepage> {
       this.num2 = num2;
       this.operation = operation;
     });
+    _history();
   }
 
   String _formatedAnswer(double answer) {
@@ -80,6 +99,13 @@ class _HomepageState extends State<Homepage> {
                 'Calculator',
                 style: TextStyle(fontSize: 40, color: Colors.white),
               ),
+            ),
+          ),
+
+          Expanded(
+            child: ListView.builder(
+              itemCount: history.length,
+              itemBuilder: (context, index) => Text(history[index]),
             ),
           ),
           Text(
