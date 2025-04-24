@@ -1,5 +1,6 @@
 import 'package:calculator_app/data/numbers.dart';
 import 'package:calculator_app/data/operations.dart';
+import 'package:calculator_app/widgets/calculator_button.dart';
 import 'package:flutter/material.dart';
 
 class Homepage extends StatefulWidget {
@@ -85,6 +86,12 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
+  void clearHistory() {
+    setState(() {
+      history.clear();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -122,97 +129,188 @@ class _HomepageState extends State<Homepage> {
                 mainAxisExtent: 100,
                 crossAxisCount: 4,
               ),
-              itemCount: 19,
+              itemCount: (allNumbers.length + allOperations.length),
               itemBuilder: (context, index) {
-                if (index < 10) {
-                  String allNum = allNumbers[index].name;
-                  return Container(
-                    color: allNumbers[index].color,
-                    child: InkWell(
-                      splashColor: Colors.purple,
-                      child: Center(child: Text(allNum)),
-                      onTap: () {
-                        if (isOperationSelected == false) {
-                          setState(() {
-                            num1 += allNum;
-                          });
-                        } else {
-                          setState(() {
-                            num2 += allNum;
-                          });
-                        }
-                      },
-                    ),
+                String allNum = allNumbers[index].name;
+                Color allNumColor = allNumbers[index].color;
+                if (index < allNumbers.length) {
+                  return CalculatorButton(
+                    color: allNumColor,
+                    text: allNum,
+                    onTap: () {
+                      if (isOperationSelected == false) {
+                        setState(() {
+                          num1 += allNum;
+                        });
+                      } else {
+                        setState(() {
+                          num2 += allNum;
+                        });
+                      }
+                    },
                   );
                 } else {
-                  String allOp = allOperations[(index - 10)].name;
-                  return Container(
-                    color: allOperations[(index - 10)].color,
-                    child: InkWell(
-                      splashColor: Colors.red,
-                      child: Center(child: Text(allOp)),
-                      onTap: () {
-                        if (allOp == '=') {
-                          calculations();
-                        } else if (allOp == "AC") {
-                          num1 = '';
-                          num2 = '';
-                          isOperationSelected = false;
-                          operation = '';
-                          setState(() {
-                            answer = 0;
-                          });
-                        } else if (allOp == '+/-') {
-                          if (!isOperationSelected && num1.isNotEmpty) {
-                            if (num1.startsWith("-")) {
-                              num1 = num1.substring(1);
-                            } else {
-                              num1 = "-$num1";
-                            }
-                            setState(() {
-                              num1;
-                              num2;
-                            });
-                          } else if (num2.startsWith("-")) {
-                            num2 = num2.substring(1);
-                          } else {
-                            num2 = "-$num2";
-                          }
-                          setState(() {
-                            num1;
-                            num2;
-                          });
-                        } else if (allOp == '.') {
-                          if (isOperationSelected == false) {
-                            num1 += '.';
-                          } else {
-                            num2 += '.';
-                          }
-                          setState(() {
-                            num1 = num1;
-                            num2 = num2;
-                          });
-                        } else if (allOp == '<-') {
-                          if (isOperationSelected == false) {
-                            num1 = num1.substring(0, num1.length - 1);
-                          } else {
-                            num2 = num2.substring(0, num2.length - 1);
-                          }
-
-                          setState(() {
-                            num1 = num1;
-                            num2 = num2;
-                          });
-                        } else {
-                          setState(() {
-                            operation = allOp;
-                          });
-                          isOperationSelected = true;
-                        }
-                      },
-                    ),
-                  );
+                  return Text(allOperations[(index - allNumbers.length)].name);
                 }
+                //   String allOp = allOperations[(index - 10)].name;
+                //   Color allOpColor = allOperations[(index - 10)].color;
+                //   print("OP Color is $allOpColor[]");
+                //   print("AllOp is $allOp");
+                // }
+                //   return CalculatorButton(
+                //     color: allOpColor,
+                //     text: allOp,
+                //     onTap: () {
+                //       if (allOp == '=') {
+                //         calculations();
+                //       } else if (allOp == "AC") {
+                //         num1 = '';
+                //         num2 = '';
+                //         isOperationSelected = false;
+                //         operation = '';
+                //         setState(() {
+                //           answer = 0;
+                //         });
+                //       } else if (allOp == '+/-') {
+                //         if (!isOperationSelected && num1.isNotEmpty) {
+                //           if (num1.startsWith("-")) {
+                //             num1 = num1.substring(1);
+                //           } else {
+                //             num1 = "-$num1";
+                //           }
+                //           setState(() {
+                //             num1;
+                //             num2;
+                //           });
+                //         } else if (num2.startsWith("-")) {
+                //           num2 = num2.substring(1);
+                //         } else {
+                //           num2 = "-$num2";
+                //         }
+                //         setState(() {
+                //           num1;
+                //           num2;
+                //         });
+                //       } else if (allOp == '.') {
+                //         if (isOperationSelected == false) {
+                //           num1 += '.';
+                //         } else {
+                //           num2 += '.';
+                //         }
+                //         setState(() {
+                //           num1 = num1;
+                //           num2 = num2;
+                //         });
+                //       } else if (allOp == '<-') {
+                //         if (isOperationSelected == false) {
+                //           num1 = num1.substring(0, num1.length - 1);
+                //         } else {
+                //           num2 = num2.substring(0, num2.length - 1);
+                //         }
+
+                //         setState(() {
+                //           num1 = num1;
+                //           num2 = num2;
+                //         });
+                //       } else {
+                //         setState(() {
+                //           operation = allOp;
+                //         });
+                //         isOperationSelected = true;
+                //       }
+                //     },
+                //   );
+                // }
+                // if (index < 10) {
+                //   String allNum = allNumbers[index].name;
+                //   return Container(
+                //     color: allNumbers[index].color,
+                //     child: InkWell(
+                //       splashColor: Colors.purple,
+                //       child: Center(child: Text(allNum)),
+                //       onTap: () {
+                //       if (isOperationSelected == false) {
+                //         setState(() {
+                //           num1 += allNum;
+                //         });
+                //       } else {
+                //         setState(() {
+                //           num2 += allNum;
+                //         });
+                //       }
+                //     },
+                //   ),
+                // );
+                // // }
+                // else {
+                //   String allOp = allOperations[(index - 10)].name;
+                //   return Container(
+                //     color: allOperations[(index - 10)].color,
+                //     child: InkWell(
+                //       splashColor: Colors.red,
+                //       child: Center(child: Text(allOp)),
+                //       onTap: () {
+                // if (allOp == '=') {
+                //   calculations();
+                // } else if (allOp == "AC") {
+                //   num1 = '';
+                //   num2 = '';
+                //   isOperationSelected = false;
+                //   operation = '';
+                //   setState(() {
+                //     answer = 0;
+                //   });
+                // } else if (allOp == '+/-') {
+                //   if (!isOperationSelected && num1.isNotEmpty) {
+                //     if (num1.startsWith("-")) {
+                //       num1 = num1.substring(1);
+                //     } else {
+                //       num1 = "-$num1";
+                //     }
+                //     setState(() {
+                //       num1;
+                //       num2;
+                //     });
+                //   } else if (num2.startsWith("-")) {
+                //     num2 = num2.substring(1);
+                //   } else {
+                //     num2 = "-$num2";
+                //   }
+                //   setState(() {
+                //     num1;
+                //     num2;
+                //   });
+                // } else if (allOp == '.') {
+                //   if (isOperationSelected == false) {
+                //     num1 += '.';
+                //   } else {
+                //     num2 += '.';
+                //   }
+                //   setState(() {
+                //     num1 = num1;
+                //     num2 = num2;
+                //   });
+                // } else if (allOp == '<-') {
+                //   if (isOperationSelected == false) {
+                //     num1 = num1.substring(0, num1.length - 1);
+                //   } else {
+                //     num2 = num2.substring(0, num2.length - 1);
+                //   }
+
+                //   setState(() {
+                //     num1 = num1;
+                //     num2 = num2;
+                //   });
+                // } else {
+                //   setState(() {
+                //     operation = allOp;
+                //   });
+                //   isOperationSelected = true;
+                // }
+                //       },
+                //     ),
+                //     );
+                //   }
               },
             ),
           ),
