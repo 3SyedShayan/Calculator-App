@@ -9,7 +9,7 @@ class CalculatorButton extends StatelessWidget {
   });
   Color color;
   String text;
-  Function() onTap;
+  final void Function() onTap;
   @override
   Widget build(BuildContext context) {
     return Container(

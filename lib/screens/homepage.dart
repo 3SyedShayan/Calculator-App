@@ -92,6 +92,67 @@ class _HomepageState extends State<Homepage> {
     });
   }
 
+  void onOperation(String allOp) {
+    print("All OP Function Executed");
+    if (allOp == '=') {
+      calculations();
+    } else if (allOp == "AC") {
+      num1 = '';
+      num2 = '';
+      isOperationSelected = false;
+      operation = '';
+      setState(() {
+        answer = 0;
+      });
+    } else if (allOp == '+/-') {
+      if (!isOperationSelected && num1.isNotEmpty) {
+        if (num1.startsWith("-")) {
+          num1 = num1.substring(1);
+        } else {
+          num1 = "-$num1";
+        }
+        setState(() {
+          num1;
+          num2;
+        });
+      } else if (num2.startsWith("-")) {
+        num2 = num2.substring(1);
+      } else {
+        num2 = "-$num2";
+      }
+      setState(() {
+        num1;
+        num2;
+      });
+    } else if (allOp == '.') {
+      if (isOperationSelected == false) {
+        num1 += '.';
+      } else {
+        num2 += '.';
+      }
+      setState(() {
+        num1 = num1;
+        num2 = num2;
+      });
+    } else if (allOp == '<-') {
+      if (isOperationSelected == false) {
+        num1 = num1.substring(0, num1.length - 1);
+      } else {
+        num2 = num2.substring(0, num2.length - 1);
+      }
+
+      setState(() {
+        num1 = num1;
+        num2 = num2;
+      });
+    } else {
+      setState(() {
+        operation = allOp;
+      });
+      isOperationSelected = true;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -131,9 +192,9 @@ class _HomepageState extends State<Homepage> {
               ),
               itemCount: (allNumbers.length + allOperations.length),
               itemBuilder: (context, index) {
-                String allNum = allNumbers[index].name;
-                Color allNumColor = allNumbers[index].color;
                 if (index < allNumbers.length) {
+                  String allNum = allNumbers[index].name;
+                  Color allNumColor = allNumbers[index].color;
                   return CalculatorButton(
                     color: allNumColor,
                     text: allNum,
@@ -150,77 +211,22 @@ class _HomepageState extends State<Homepage> {
                     },
                   );
                 } else {
-                  return Text(allOperations[(index - allNumbers.length)].name);
+                  //   return Text(index.toString());
+                  // }
+                  //   print("OP Color is $allOpColor[]");
+                  //   print("AllOp is $allOp");
+                  // }
+                  String allOp = allOperations[(index - 10)].name;
+                  Color allOpColor = allOperations[(index - 10)].color;
+                  return CalculatorButton(
+                    color: allOpColor,
+                    text: allOp,
+                    onTap: () {
+                      // onOperation(allOp);
+                      print("All OP is called");
+                    },
+                  );
                 }
-                //   String allOp = allOperations[(index - 10)].name;
-                //   Color allOpColor = allOperations[(index - 10)].color;
-                //   print("OP Color is $allOpColor[]");
-                //   print("AllOp is $allOp");
-                // }
-                //   return CalculatorButton(
-                //     color: allOpColor,
-                //     text: allOp,
-                //     onTap: () {
-                //       if (allOp == '=') {
-                //         calculations();
-                //       } else if (allOp == "AC") {
-                //         num1 = '';
-                //         num2 = '';
-                //         isOperationSelected = false;
-                //         operation = '';
-                //         setState(() {
-                //           answer = 0;
-                //         });
-                //       } else if (allOp == '+/-') {
-                //         if (!isOperationSelected && num1.isNotEmpty) {
-                //           if (num1.startsWith("-")) {
-                //             num1 = num1.substring(1);
-                //           } else {
-                //             num1 = "-$num1";
-                //           }
-                //           setState(() {
-                //             num1;
-                //             num2;
-                //           });
-                //         } else if (num2.startsWith("-")) {
-                //           num2 = num2.substring(1);
-                //         } else {
-                //           num2 = "-$num2";
-                //         }
-                //         setState(() {
-                //           num1;
-                //           num2;
-                //         });
-                //       } else if (allOp == '.') {
-                //         if (isOperationSelected == false) {
-                //           num1 += '.';
-                //         } else {
-                //           num2 += '.';
-                //         }
-                //         setState(() {
-                //           num1 = num1;
-                //           num2 = num2;
-                //         });
-                //       } else if (allOp == '<-') {
-                //         if (isOperationSelected == false) {
-                //           num1 = num1.substring(0, num1.length - 1);
-                //         } else {
-                //           num2 = num2.substring(0, num2.length - 1);
-                //         }
-
-                //         setState(() {
-                //           num1 = num1;
-                //           num2 = num2;
-                //         });
-                //       } else {
-                //         setState(() {
-                //           operation = allOp;
-                //         });
-                //         isOperationSelected = true;
-                //       }
-                //     },
-                //   );
-                // }
                 // if (index < 10) {
                 //   String allNum = allNumbers[index].name;
                 //   return Container(
