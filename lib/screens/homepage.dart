@@ -199,6 +199,7 @@ class _HomepageState extends State<Homepage> {
                     color: allNumColor,
                     text: allNum,
                     onTap: () {
+                      print("All Num is called");
                       if (isOperationSelected == false) {
                         setState(() {
                           num1 += allNum;
@@ -222,7 +223,7 @@ class _HomepageState extends State<Homepage> {
                     color: allOpColor,
                     text: allOp,
                     onTap: () {
-                      // onOperation(allOp);
+                      onOperation(allOp);
                       print("All OP is called");
                     },
                   );

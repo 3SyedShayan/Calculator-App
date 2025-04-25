@@ -9,16 +9,19 @@ class CalculatorButton extends StatelessWidget {
   });
   Color color;
   String text;
-  final void Function() onTap;
+  final Function() onTap;
   @override
   Widget build(BuildContext context) {
-    return Container(
-      // color: color,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        color: color,
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        // color: color,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
+          color: color,
+        ),
+        child: Center(child: Text(text, style: TextStyle(color: Colors.white))),
       ),
-      child: Center(child: Text(text, style: TextStyle(color: Colors.white))),
     );
   }
 }
