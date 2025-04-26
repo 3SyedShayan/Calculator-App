@@ -15,7 +15,6 @@ class CalculatorButton extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        // color: color,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: color,

@@ -32,13 +32,11 @@ class _HomepageState extends State<Homepage> {
       setState(() {
         history;
       });
-      print("With Parameter ${history[0]}");
     } else {
       history.insert(0, "$num1 $operation $num2 = ${_formatedAnswer(answer)}");
       setState(() {
         history;
       });
-      print("No Parameter ${history[0]}");
     }
   }
 
@@ -93,7 +91,6 @@ class _HomepageState extends State<Homepage> {
   }
 
   void onOperation(String allOp) {
-    print("All OP Function Executed");
     if (allOp == '=') {
       calculations();
     } else if (allOp == "AC") {
@@ -199,7 +196,6 @@ class _HomepageState extends State<Homepage> {
                     color: allNumColor,
                     text: allNum,
                     onTap: () {
-                      print("All Num is called");
                       if (isOperationSelected == false) {
                         setState(() {
                           num1 += allNum;
@@ -212,112 +208,17 @@ class _HomepageState extends State<Homepage> {
                     },
                   );
                 } else {
-                  //   return Text(index.toString());
-                  // }
-                  //   print("OP Color is $allOpColor[]");
-                  //   print("AllOp is $allOp");
-                  // }
+    
                   String allOp = allOperations[(index - 10)].name;
                   Color allOpColor = allOperations[(index - 10)].color;
                   return CalculatorButton(
                     color: allOpColor,
                     text: allOp,
                     onTap: () {
-                      onOperation(allOp);
-                      print("All OP is called");
-                    },
+                      onOperation(allOp);                    },
                   );
                 }
-                // if (index < 10) {
-                //   String allNum = allNumbers[index].name;
-                //   return Container(
-                //     color: allNumbers[index].color,
-                //     child: InkWell(
-                //       splashColor: Colors.purple,
-                //       child: Center(child: Text(allNum)),
-                //       onTap: () {
-                //       if (isOperationSelected == false) {
-                //         setState(() {
-                //           num1 += allNum;
-                //         });
-                //       } else {
-                //         setState(() {
-                //           num2 += allNum;
-                //         });
-                //       }
-                //     },
-                //   ),
-                // );
-                // // }
-                // else {
-                //   String allOp = allOperations[(index - 10)].name;
-                //   return Container(
-                //     color: allOperations[(index - 10)].color,
-                //     child: InkWell(
-                //       splashColor: Colors.red,
-                //       child: Center(child: Text(allOp)),
-                //       onTap: () {
-                // if (allOp == '=') {
-                //   calculations();
-                // } else if (allOp == "AC") {
-                //   num1 = '';
-                //   num2 = '';
-                //   isOperationSelected = false;
-                //   operation = '';
-                //   setState(() {
-                //     answer = 0;
-                //   });
-                // } else if (allOp == '+/-') {
-                //   if (!isOperationSelected && num1.isNotEmpty) {
-                //     if (num1.startsWith("-")) {
-                //       num1 = num1.substring(1);
-                //     } else {
-                //       num1 = "-$num1";
-                //     }
-                //     setState(() {
-                //       num1;
-                //       num2;
-                //     });
-                //   } else if (num2.startsWith("-")) {
-                //     num2 = num2.substring(1);
-                //   } else {
-                //     num2 = "-$num2";
-                //   }
-                //   setState(() {
-                //     num1;
-                //     num2;
-                //   });
-                // } else if (allOp == '.') {
-                //   if (isOperationSelected == false) {
-                //     num1 += '.';
-                //   } else {
-                //     num2 += '.';
-                //   }
-                //   setState(() {
-                //     num1 = num1;
-                //     num2 = num2;
-                //   });
-                // } else if (allOp == '<-') {
-                //   if (isOperationSelected == false) {
-                //     num1 = num1.substring(0, num1.length - 1);
-                //   } else {
-                //     num2 = num2.substring(0, num2.length - 1);
-                //   }
 
-                //   setState(() {
-                //     num1 = num1;
-                //     num2 = num2;
-                //   });
-                // } else {
-                //   setState(() {
-                //     operation = allOp;
-                //   });
-                //   isOperationSelected = true;
-                // }
-                //       },
-                //     ),
-                //     );
-                //   }
               },
             ),
           ),
