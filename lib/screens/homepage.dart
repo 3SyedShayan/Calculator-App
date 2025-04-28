@@ -206,9 +206,16 @@ class _HomepageState extends State<Homepage> {
           Divider(color: Colors.white24, thickness: 1),
 
           // Display Section
-          Text(
-            "$num1 $operation $num2  ${answer == 0 ? "" : " = ${_formatedAnswer(answer)}"}",
-            style: const TextStyle(fontSize: 25, color: Colors.white),
+          Container(
+            alignment: Alignment.centerRight,
+            child: Text(
+              "$num1 $operation $num2  ${answer == 0 ? "" : " = ${_formatedAnswer(answer)}"}",
+              style: const TextStyle(
+                fontSize: 38,
+                color: Colors.white,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
           ),
 
           Expanded(
