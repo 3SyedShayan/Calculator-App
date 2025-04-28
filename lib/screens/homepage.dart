@@ -1,5 +1,6 @@
 import 'package:calculator_app/data/numbers.dart';
 import 'package:calculator_app/data/operations.dart';
+import 'package:calculator_app/model/colors.dart';
 import 'package:calculator_app/widgets/calculator_button.dart';
 import 'package:flutter/material.dart';
 
@@ -26,9 +27,9 @@ class _HomepageState extends State<Homepage> {
 
   List<String> history = [];
   void _history() {
-    if (history.length >= 5) {
+    if (history.length >= 4) {
       history.insert(0, "$num1 $operation $num2 = ${_formatedAnswer(answer)}");
-      history.removeAt(5);
+      history.removeAt(4);
       setState(() {
         history;
       });
@@ -153,29 +154,58 @@ class _HomepageState extends State<Homepage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: kBackgroundColor,
       body: Column(
         children: [
+          // Header
           Container(
             height: 50,
             width: double.infinity,
-            color: Colors.red,
+            color: kHeaderColor,
             child: const Center(
               child: Text(
                 'Calculator',
-                style: TextStyle(fontSize: 40, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 40,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w500,
+                ),
               ),
             ),
           ),
 
-          Expanded(
-            child: ListView.builder(
-              itemCount: history.length,
-              itemBuilder: (context, index) => Text(history[index]),
+          //History Section
+          Container(
+            padding: EdgeInsets.fromLTRB(15, 10, 10, 5),
+            alignment: Alignment.topLeft,
+            child: Text(
+              "History",
+              style: TextStyle(
+                fontSize: 24,
+                color: Colors.white70,
+                fontWeight: FontWeight.w500,
+              ),
             ),
           ),
+          // Calculations History
+          Container(
+            padding: EdgeInsets.fromLTRB(15, 0, 10, 10),
+            height: MediaQuery.of(context).size.height * 0.16,
+
+            child: ListView.builder(
+              itemCount: history.length,
+              itemBuilder: (context, index) {
+                return Text(
+                  history[index],
+                  style: TextStyle(fontSize: 18, color: Colors.white70),
+                );
+              },
+            ),
+          ),
+          // Display Section
           Text(
             "$num1 $operation $num2  ${answer == 0 ? "" : " = ${_formatedAnswer(answer)}"}",
-            style: const TextStyle(fontSize: 25),
+            style: const TextStyle(fontSize: 25, color: Colors.white),
           ),
 
           Expanded(
@@ -208,17 +238,16 @@ class _HomepageState extends State<Homepage> {
                     },
                   );
                 } else {
-    
                   String allOp = allOperations[(index - 10)].name;
                   Color allOpColor = allOperations[(index - 10)].color;
                   return CalculatorButton(
                     color: allOpColor,
                     text: allOp,
                     onTap: () {
-                      onOperation(allOp);                    },
+                      onOperation(allOp);
+                    },
                   );
                 }
-
               },
             ),
           ),
