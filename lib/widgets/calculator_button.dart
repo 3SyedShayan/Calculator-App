@@ -12,14 +12,18 @@ class CalculatorButton extends StatelessWidget {
   final Function() onTap;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(20),
-          color: color,
+    return Material(
+      color: color,
+      borderRadius: BorderRadius.circular(12),
+      child: InkWell(
+        borderRadius: BorderRadius.circular(12),
+        onTap: onTap,
+        child: Center(
+          child: Text(
+            text,
+            style: TextStyle(fontSize: 28, color: Colors.white),
+          ),
         ),
-        child: Center(child: Text(text, style: TextStyle(color: Colors.white))),
       ),
     );
   }
