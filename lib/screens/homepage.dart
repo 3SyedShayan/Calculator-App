@@ -217,7 +217,7 @@ class _HomepageState extends State<Homepage> {
               ),
             ),
           ),
-
+          // Calculator Buttons
           Expanded(
             child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
