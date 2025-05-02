@@ -41,6 +41,18 @@ class _HomepageState extends State<Homepage> {
     }
   }
 
+  void numOperation(String allNum) {
+    if (isOperationSelected == false) {
+      setState(() {
+        num1 += allNum;
+      });
+    } else {
+      setState(() {
+        num2 += allNum;
+      });
+    }
+  }
+
   void calculations() {
     switch (operation) {
       case '+':
@@ -229,34 +241,113 @@ class _HomepageState extends State<Homepage> {
               ),
               itemCount: (allNumbers.length + allOperations.length),
               itemBuilder: (context, index) {
-                if (index < allNumbers.length) {
-                  String allNum = allNumbers[index].name;
-                  Color allNumColor = allNumbers[index].color;
-                  return CalculatorButton(
-                    color: allNumColor,
-                    text: allNum,
-                    onTap: () {
-                      if (isOperationSelected == false) {
-                        setState(() {
-                          num1 += allNum;
-                        });
-                      } else {
-                        setState(() {
-                          num2 += allNum;
-                        });
-                      }
-                    },
-                  );
+                if (index < 4 || (index + 1) % 4 == 0) {
+                  if (index < 4) {
+                    return CalculatorButton(
+                      color: Colors.green,
+                      text: allOperations[index].name,
+                      onTap: () {
+                        onOperation(allOperations[index].operation);
+                      },
+                    );
+                  }
+                  if (index == 7) {
+                    return CalculatorButton(
+                      color: Colors.green,
+                      text: allOperations[index - 3].name,
+                      onTap: () {
+                        onOperation(allOperations[index - 3].operation);
+                      },
+                    );
+                  }
+                  if (index == 11) {
+                    return CalculatorButton(
+                      color: Colors.green,
+                      text: allOperations[index - 6].name,
+                      onTap: () {
+                        onOperation(allOperations[index - 6].operation);
+                      },
+                    );
+                  }
+                  if (index == 15) {
+                    return CalculatorButton(
+                      color: Colors.green,
+                      text: allOperations[index - 9].name,
+                      onTap: () {
+                        onOperation(allOperations[index - 9].operation);
+                      },
+                    );
+                  }
+                  if (index == 19) {
+                    return CalculatorButton(
+                      color: Colors.green,
+                      text: allOperations[index - 10].name,
+                      onTap: () {
+                        onOperation(allOperations[index - 10].operation);
+                      },
+                    );
+                  }
+                  // if (index == 20) {
+                  //   return CalculatorButton(
+                  //     color: Colors.green,
+                  //     text: allOperations[index - 11].name,
+                  //     onTap: () {},
+                  //   );
+                  // }
                 } else {
-                  String allOp = allOperations[(index - 10)].name;
-                  Color allOpColor = allOperations[(index - 10)].color;
-                  return CalculatorButton(
-                    color: allOpColor,
-                    text: allOp,
-                    onTap: () {
-                      onOperation(allOp);
-                    },
-                  );
+                  if (index < 7) {
+                    return CalculatorButton(
+                      color: Colors.green,
+                      text: allNumbers[index - 4].name,
+                      onTap: () {
+                        numOperation(allNumbers[index - 4].name);
+                      },
+                    );
+                  } else if (index > 7 && index < 11) {
+                    return CalculatorButton(
+                      color: Colors.green,
+                      text: allNumbers[index - 5].name,
+                      onTap: () {
+                        numOperation(allNumbers[index - 5].name);
+                      },
+                    );
+                  } else if (index > 11 && index < 15) {
+                    return CalculatorButton(
+                      color: Colors.green,
+                      text: allNumbers[index - 6].name,
+                      onTap: () {
+                        numOperation(allNumbers[index - 6].name);
+                      },
+                    );
+                  } else if (index == 16) {
+                    print("Current for All num ${index - 7}");
+                    return CalculatorButton(
+                      color: Colors.green,
+                      text: allNumbers[index - 7].name,
+                      onTap: () {
+                        numOperation(allNumbers[index - 7].name);
+                      },
+                    );
+                  } else if (index > 16 && index < 21) {
+                    return CalculatorButton(
+                      color: Colors.green,
+                      text: allOperations[index - 10].name,
+                      onTap: () {
+                        onOperation(allOperations[index - 10].operation);
+                      },
+                    );
+                  }
+                  // else if (index > 19 && index < 23) {
+                  //   return CalculatorButton(
+                  //     color: Colors.green,
+                  //     text: allOperations[index - 8].name,
+                  //     onTap: () {},
+                  //   );
+                  // }
+                  else {
+                    print("error at Index: $index");
+                    return const SizedBox.shrink();
+                  }
                 }
               },
             ),
