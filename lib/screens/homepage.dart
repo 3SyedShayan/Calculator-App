@@ -165,194 +165,196 @@ class _HomepageState extends State<Homepage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: kBackgroundColor,
-      body: Column(
-        children: [
-          // Header
-          Container(
-            height: 50,
-            width: double.infinity,
-            color: kHeaderColor,
-            child: const Center(
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: kBackgroundColor,
+        body: Column(
+          children: [
+            // Header
+            Container(
+              height: 50,
+              width: double.infinity,
+              color: kHeaderColor,
+              child: const Center(
+                child: Text(
+                  'Calculator',
+                  style: TextStyle(
+                    fontSize: 40,
+                    color: Colors.white,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ),
+            ),
+
+            //History Section
+            Container(
+              padding: EdgeInsets.fromLTRB(15, 10, 10, 5),
+              alignment: Alignment.topLeft,
               child: Text(
-                'Calculator',
+                "History",
                 style: TextStyle(
-                  fontSize: 40,
-                  color: Colors.white,
+                  fontSize: 24,
+                  color: Colors.white70,
                   fontWeight: FontWeight.w500,
                 ),
               ),
             ),
-          ),
+            // Calculations History
+            Container(
+              padding: EdgeInsets.fromLTRB(15, 0, 10, 10),
+              height: MediaQuery.of(context).size.height * 0.12,
 
-          //History Section
-          Container(
-            padding: EdgeInsets.fromLTRB(15, 10, 10, 5),
-            alignment: Alignment.topLeft,
-            child: Text(
-              "History",
-              style: TextStyle(
-                fontSize: 24,
-                color: Colors.white70,
-                fontWeight: FontWeight.w500,
+              child: ListView.builder(
+                itemCount: history.length,
+                itemBuilder: (context, index) {
+                  return Text(
+                    history[index],
+                    style: TextStyle(fontSize: 18, color: Colors.white70),
+                  );
+                },
               ),
             ),
-          ),
-          // Calculations History
-          Container(
-            padding: EdgeInsets.fromLTRB(15, 0, 10, 10),
-            height: MediaQuery.of(context).size.height * 0.16,
 
-            child: ListView.builder(
-              itemCount: history.length,
-              itemBuilder: (context, index) {
-                return Text(
-                  history[index],
-                  style: TextStyle(fontSize: 18, color: Colors.white70),
-                );
-              },
-            ),
-          ),
+            Divider(color: Colors.white24, thickness: 1),
 
-          Divider(color: Colors.white24, thickness: 1),
-
-          // Display Section
-          Container(
-            alignment: Alignment.centerRight,
-            child: Text(
-              "$num1 $operation $num2  ${answer == 0 ? "" : " = ${_formatedAnswer(answer)}"}",
-              style: const TextStyle(
-                fontSize: 38,
-                color: Colors.white,
-                fontWeight: FontWeight.w400,
+            // Display Section
+            Container(
+              alignment: Alignment.centerRight,
+              child: Text(
+                "$num1 $operation $num2  ${answer == 0 ? "" : " = ${_formatedAnswer(answer)}"}",
+                style: const TextStyle(
+                  fontSize: 38,
+                  color: Colors.white,
+                  fontWeight: FontWeight.w400,
+                ),
               ),
             ),
-          ),
-          // Calculator Buttons
-          Expanded(
-            child: GridView.builder(
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                mainAxisSpacing: 10,
-                crossAxisSpacing: 10,
-                childAspectRatio: 1.4,
-                mainAxisExtent: 100,
-                crossAxisCount: 4,
+            // Calculator Buttons
+            Expanded(
+              child: GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  mainAxisSpacing: 10,
+                  crossAxisSpacing: 10,
+                  childAspectRatio: 1.4,
+                  mainAxisExtent: 100,
+                  crossAxisCount: 4,
+                ),
+                itemCount: (allNumbers.length + allOperations.length),
+                itemBuilder: (context, index) {
+                  if (index < 4 || (index + 1) % 4 == 0) {
+                    if (index < 4) {
+                      return CalculatorButton(
+                        color: allOperations[index].color,
+                        text: allOperations[index].name,
+                        onTap: () {
+                          onOperation(allOperations[index].operation);
+                        },
+                      );
+                    }
+                    if (index == 7) {
+                      return CalculatorButton(
+                        color: allOperations[index - 3].color,
+                        text: allOperations[index - 3].name,
+                        onTap: () {
+                          onOperation(allOperations[index - 3].operation);
+                        },
+                      );
+                    }
+                    if (index == 11) {
+                      return CalculatorButton(
+                        color: allOperations[index - 6].color,
+                        text: allOperations[index - 6].name,
+                        onTap: () {
+                          onOperation(allOperations[index - 6].operation);
+                        },
+                      );
+                    }
+                    if (index == 15) {
+                      return CalculatorButton(
+                        color: allOperations[index - 9].color,
+                        text: allOperations[index - 9].name,
+                        onTap: () {
+                          onOperation(allOperations[index - 9].operation);
+                        },
+                      );
+                    }
+                    if (index == 19) {
+                      return CalculatorButton(
+                        color: allOperations[index - 10].color,
+                        text: allOperations[index - 10].name,
+                        onTap: () {
+                          onOperation(allOperations[index - 10].operation);
+                        },
+                      );
+                    }
+                    // if (index == 20) {
+                    //   return CalculatorButton(
+                    //     color: Colors.green,
+                    //     text: allOperations[index - 11].name,
+                    //     onTap: () {},
+                    //   );
+                    // }
+                  } else {
+                    if (index < 7) {
+                      return CalculatorButton(
+                        color: allNumbers[index - 4].color,
+                        text: allNumbers[index - 4].name,
+                        onTap: () {
+                          numOperation(allNumbers[index - 4].name);
+                        },
+                      );
+                    } else if (index > 7 && index < 11) {
+                      return CalculatorButton(
+                        color: allNumbers[index - 5].color,
+                        text: allNumbers[index - 5].name,
+                        onTap: () {
+                          numOperation(allNumbers[index - 5].name);
+                        },
+                      );
+                    } else if (index > 11 && index < 15) {
+                      return CalculatorButton(
+                        color: allNumbers[index - 6].color,
+                        text: allNumbers[index - 6].name,
+                        onTap: () {
+                          numOperation(allNumbers[index - 6].name);
+                        },
+                      );
+                    } else if (index == 16) {
+                      print("Current for All num ${index - 7}");
+                      return CalculatorButton(
+                        color: allNumbers[index - 7].color,
+                        text: allNumbers[index - 7].name,
+                        onTap: () {
+                          numOperation(allNumbers[index - 7].name);
+                        },
+                      );
+                    } else if (index > 16 && index < 21) {
+                      return CalculatorButton(
+                        color: allOperations[index - 10].color,
+                        text: allOperations[index - 10].name,
+                        onTap: () {
+                          onOperation(allOperations[index - 10].operation);
+                        },
+                      );
+                    }
+                    // else if (index > 19 && index < 23) {
+                    //   return CalculatorButton(
+                    //     color: Colors.green,
+                    //     text: allOperations[index - 8].name,
+                    //     onTap: () {},
+                    //   );
+                    // }
+                    else {
+                      print("error at Index: $index");
+                      return const SizedBox.shrink();
+                    }
+                  }
+                },
               ),
-              itemCount: (allNumbers.length + allOperations.length),
-              itemBuilder: (context, index) {
-                if (index < 4 || (index + 1) % 4 == 0) {
-                  if (index < 4) {
-                    return CalculatorButton(
-                      color: Colors.green,
-                      text: allOperations[index].name,
-                      onTap: () {
-                        onOperation(allOperations[index].operation);
-                      },
-                    );
-                  }
-                  if (index == 7) {
-                    return CalculatorButton(
-                      color: Colors.green,
-                      text: allOperations[index - 3].name,
-                      onTap: () {
-                        onOperation(allOperations[index - 3].operation);
-                      },
-                    );
-                  }
-                  if (index == 11) {
-                    return CalculatorButton(
-                      color: Colors.green,
-                      text: allOperations[index - 6].name,
-                      onTap: () {
-                        onOperation(allOperations[index - 6].operation);
-                      },
-                    );
-                  }
-                  if (index == 15) {
-                    return CalculatorButton(
-                      color: Colors.green,
-                      text: allOperations[index - 9].name,
-                      onTap: () {
-                        onOperation(allOperations[index - 9].operation);
-                      },
-                    );
-                  }
-                  if (index == 19) {
-                    return CalculatorButton(
-                      color: Colors.green,
-                      text: allOperations[index - 10].name,
-                      onTap: () {
-                        onOperation(allOperations[index - 10].operation);
-                      },
-                    );
-                  }
-                  // if (index == 20) {
-                  //   return CalculatorButton(
-                  //     color: Colors.green,
-                  //     text: allOperations[index - 11].name,
-                  //     onTap: () {},
-                  //   );
-                  // }
-                } else {
-                  if (index < 7) {
-                    return CalculatorButton(
-                      color: Colors.green,
-                      text: allNumbers[index - 4].name,
-                      onTap: () {
-                        numOperation(allNumbers[index - 4].name);
-                      },
-                    );
-                  } else if (index > 7 && index < 11) {
-                    return CalculatorButton(
-                      color: Colors.green,
-                      text: allNumbers[index - 5].name,
-                      onTap: () {
-                        numOperation(allNumbers[index - 5].name);
-                      },
-                    );
-                  } else if (index > 11 && index < 15) {
-                    return CalculatorButton(
-                      color: Colors.green,
-                      text: allNumbers[index - 6].name,
-                      onTap: () {
-                        numOperation(allNumbers[index - 6].name);
-                      },
-                    );
-                  } else if (index == 16) {
-                    print("Current for All num ${index - 7}");
-                    return CalculatorButton(
-                      color: Colors.green,
-                      text: allNumbers[index - 7].name,
-                      onTap: () {
-                        numOperation(allNumbers[index - 7].name);
-                      },
-                    );
-                  } else if (index > 16 && index < 21) {
-                    return CalculatorButton(
-                      color: Colors.green,
-                      text: allOperations[index - 10].name,
-                      onTap: () {
-                        onOperation(allOperations[index - 10].operation);
-                      },
-                    );
-                  }
-                  // else if (index > 19 && index < 23) {
-                  //   return CalculatorButton(
-                  //     color: Colors.green,
-                  //     text: allOperations[index - 8].name,
-                  //     onTap: () {},
-                  //   );
-                  // }
-                  else {
-                    print("error at Index: $index");
-                    return const SizedBox.shrink();
-                  }
-                }
-              },
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
