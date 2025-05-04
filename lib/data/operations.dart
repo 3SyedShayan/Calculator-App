@@ -1,4 +1,3 @@
-import 'package:calculator_app/model/colors.dart';
 import 'package:calculator_app/model/operations.dart';
 import 'package:flutter/material.dart';
 

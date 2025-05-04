@@ -288,13 +288,6 @@ class _HomepageState extends State<Homepage> {
                         },
                       );
                     }
-                    // if (index == 20) {
-                    //   return CalculatorButton(
-                    //     color: Colors.green,
-                    //     text: allOperations[index - 11].name,
-                    //     onTap: () {},
-                    //   );
-                    // }
                   } else {
                     if (index < 7) {
                       return CalculatorButton(
@@ -321,7 +314,6 @@ class _HomepageState extends State<Homepage> {
                         },
                       );
                     } else if (index == 16) {
-                      print("Current for All num ${index - 7}");
                       return CalculatorButton(
                         color: allNumbers[index - 7].color,
                         text: allNumbers[index - 7].name,
@@ -337,15 +329,7 @@ class _HomepageState extends State<Homepage> {
                           onOperation(allOperations[index - 10].operation);
                         },
                       );
-                    }
-                    // else if (index > 19 && index < 23) {
-                    //   return CalculatorButton(
-                    //     color: Colors.green,
-                    //     text: allOperations[index - 8].name,
-                    //     onTap: () {},
-                    //   );
-                    // }
-                    else {
+                    } else {
                       print("error at Index: $index");
                       return const SizedBox.shrink();
                     }
